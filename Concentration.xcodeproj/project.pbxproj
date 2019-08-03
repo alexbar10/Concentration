@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D68731022F4E6E800395DDF /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68730F22F4E6E800395DDF /* Theme.swift */; };
 		4D8FC69622F35BAD008C2459 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8FC69522F35BAD008C2459 /* AppDelegate.swift */; };
 		4D8FC69822F35BAD008C2459 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8FC69722F35BAD008C2459 /* ViewController.swift */; };
 		4D8FC69B22F35BAD008C2459 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D8FC69922F35BAD008C2459 /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D68730F22F4E6E800395DDF /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		4D8FC69222F35BAD008C2459 /* Concentration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Concentration.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D8FC69522F35BAD008C2459 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D8FC69722F35BAD008C2459 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 				4D8FC6A722F375D8008C2459 /* Supporting files */,
 				4D8FC6A822F37610008C2459 /* Concentration.swift */,
 				4D8FC6AA22F37692008C2459 /* Card.swift */,
+				4D68730F22F4E6E800395DDF /* Theme.swift */,
 			);
 			path = Concentration;
 			sourceTree = "<group>";
@@ -151,6 +154,7 @@
 			files = (
 				4D8FC69822F35BAD008C2459 /* ViewController.swift in Sources */,
 				4D8FC69622F35BAD008C2459 /* AppDelegate.swift in Sources */,
+				4D68731022F4E6E800395DDF /* Theme.swift in Sources */,
 				4D8FC6A922F37610008C2459 /* Concentration.swift in Sources */,
 				4D8FC6AB22F37692008C2459 /* Card.swift in Sources */,
 			);
