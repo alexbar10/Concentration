@@ -9,15 +9,36 @@
 import Foundation
 
 class Concentration {
-    var cards = [Card]()
-    var cardsAlreadySeen: [Int]
-    var score: Int
-    var flipCounts: Int
+    private(set) var cards = [Card]()
+    private var cardsAlreadySeen: [Int]
+    private(set) var score: Int
+    private(set) var flipCounts: Int
 
-    var indexOfOneAndOnlyFaceUpCard: Int?
+    private var indexOfOneAndOnlyFaceUpCard: Int? {
+        get {
+            var foundIndex: Int?
+            for index in cards.indices {
+                if cards[index].isFaceUp {
+                    if foundIndex == nil {
+                        foundIndex = index
+                    } else {
+                        return nil
+                    }
+                }
+            }
+            return foundIndex
+        }
+        set {
+            for index in cards.indices {
+                cards[index].isFaceUp = (index == newValue)
+            }
+        }
+    }
+    
     var dateForOneAndOnlyFaceUpCard: Date?
     
     init(numberOfPairsOfCards: Int) {
+        assert(numberOfPairsOfCards > 0, "Concentration.init(\(numberOfPairsOfCards)): you must have at least one pair of cards")
         for _ in 0..<numberOfPairsOfCards {
             let card = Card()
             cards += [card, card]
@@ -27,8 +48,8 @@ class Concentration {
         var randomCards = cards
         
         for index in randomCards.indices {
-            let randomIndex = Int(arc4random_uniform(UInt32(cards.count)))
-            randomCards[index] = cards.remove(at: randomIndex)
+            //let randomIndex =
+            randomCards[index] = cards.remove(at: cards.count.arc4random)
         }
         
         cards = randomCards
@@ -40,6 +61,7 @@ class Concentration {
     }
     
     func chooseCard(at index: Int) {
+        assert(cards.indices.contains(index), "Concentraition.chooseCard(at: \(index)): choosen index not in the cards")
         flipCounts += 1
         if !cards[index].isMatched {
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
@@ -63,15 +85,9 @@ class Concentration {
                     }
                 }
                 cards[index].isFaceUp = true
-                indexOfOneAndOnlyFaceUpCard = nil
                 dateForOneAndOnlyFaceUpCard = nil
                 
             } else {
-                // either no cards or 2 cards are face up
-                for flipDownIndex in cards.indices {
-                    cards[flipDownIndex].isFaceUp = false
-                }
-                cards[index].isFaceUp = true
                 indexOfOneAndOnlyFaceUpCard = index
                 dateForOneAndOnlyFaceUpCard = Date()
             }
@@ -98,5 +114,18 @@ class Concentration {
             }
         }
         return 0
+    }
+}
+
+
+extension Int {
+    var arc4random: Int {
+        if self > 0 {
+            return Int(arc4random_uniform(UInt32(self)))
+        } else if self < 0 {
+            return -Int(arc4random_uniform(UInt32(abs(self))))
+        } else {
+            return 0
+        }
     }
 }
