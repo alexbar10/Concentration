@@ -63,14 +63,14 @@ class ViewController: UIViewController {
     private lazy var themesAvailables = [themeAnimals, themeFaces, themeFood, themeSport, themeVehicles, themeChess]
     private var themeChoosen = Theme()
     
-    private var emoji = [Int : String]()
+    private var emoji = [Card : String]()
     
     private func emoji(for card: Card) -> String {
-        if emoji[card.identifier] == nil, themeChoosen.emojis.count > 0 {
+        if emoji[card] == nil, themeChoosen.emojis.count > 0 {
             let randomIndex = arc4random_uniform(UInt32(themeChoosen.emojis.count))
-            emoji[card.identifier] = themeChoosen.emojis.remove(at: Int(randomIndex))
+            emoji[card] = themeChoosen.emojis.remove(at: Int(randomIndex))
         }
-        return emoji[card.identifier] ?? "?"
+        return emoji[card] ?? "?"
     }
     
 }

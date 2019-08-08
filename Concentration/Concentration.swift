@@ -8,9 +8,9 @@
 
 import Foundation
 
-class Concentration {
+struct Concentration {
     private(set) var cards = [Card]()
-    private var cardsAlreadySeen: [Int]
+    private var cardsAlreadySeen: [Card]
     private(set) var score: Int
     private(set) var flipCounts: Int
 
@@ -57,31 +57,31 @@ class Concentration {
         // reset
         score = 0
         flipCounts = 0
-        cardsAlreadySeen = [Int]()
+        cardsAlreadySeen = [Card]()
     }
     
-    func chooseCard(at index: Int) {
+    mutating func chooseCard(at index: Int) {
         assert(cards.indices.contains(index), "Concentraition.chooseCard(at: \(index)): choosen index not in the cards")
         flipCounts += 1
         if !cards[index].isMatched {
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
                 // check if cards match
-                if cards[matchIndex].identifier == cards[index].identifier {
+                if cards[matchIndex] == cards[index] {
                     cards[matchIndex].isMatched = true
                     cards[index].isMatched = true
                     score += 2
                     score += getExtraPointsFor(initDate: dateForOneAndOnlyFaceUpCard)
                 } else {
                     for cardSeen in cardsAlreadySeen {
-                        if cardSeen == cards[index].identifier { score -= 1 }
-                        if cardSeen == cards[matchIndex].identifier { score -= 1 }
+                        if cardSeen == cards[index] { score -= 1 }
+                        if cardSeen == cards[matchIndex] { score -= 1 }
                     }
                     
-                    if !cardsAlreadySeen.contains(cards[index].identifier) {
-                        cardsAlreadySeen.append(cards[index].identifier)
+                    if !cardsAlreadySeen.contains(cards[index]) {
+                        cardsAlreadySeen.append(cards[index])
                     }
-                    if !cardsAlreadySeen.contains(cards[matchIndex].identifier) {
-                        cardsAlreadySeen.append(cards[matchIndex].identifier)
+                    if !cardsAlreadySeen.contains(cards[matchIndex]) {
+                        cardsAlreadySeen.append(cards[matchIndex])
                     }
                 }
                 cards[index].isFaceUp = true
