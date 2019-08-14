@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ConcentrationViewController: UIViewController {
     
     @IBOutlet private weak var flipCountLabel: UILabel! {
         didSet {
@@ -39,22 +39,24 @@ class ViewController: UIViewController {
     }
     
     private func updateViewFromModel() {
-        for index in cardButtons.indices {
-            // get button and card in that index
-            let button = cardButtons[index]
-            let card = game.cards[index]
-     
-            if card.isFaceUp {
-                button.setTitle(emoji(for: card), for: .normal)
-                button.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-            } else {
-                button.setTitle("", for: .normal)
-                button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 0) : themeChoosen.backgroundButton
+        if cardButtons != nil {         
+            for index in cardButtons.indices {
+                // get button and card in that index
+                let button = cardButtons[index]
+                let card = game.cards[index]
+                
+                if card.isFaceUp {
+                    button.setTitle(emoji(for: card), for: .normal)
+                    button.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+                } else {
+                    button.setTitle("", for: .normal)
+                    button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 0) : themeChoosen.backgroundButton
+                }
             }
+            scoreLabel.text = "Score: " +  String(game.score)
+            updateFlipCountLabel()
+            view.backgroundColor = themeChoosen.backgroundView
         }
-        scoreLabel.text = "Score: " +  String(game.score)
-        updateFlipCountLabel()
-        view.backgroundColor = themeChoosen.backgroundView
     }
     
     private func updateFlipCountLabel() {
@@ -66,6 +68,15 @@ class ViewController: UIViewController {
         let attributedString = NSAttributedString(string: "Flips: " + String(game.flipCounts), attributes: attributes)
         
         flipCountLabel.attributedText = attributedString
+    }
+    
+    var themePassed: Theme? {
+        didSet {
+            //game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
+            themeChoosen = themePassed ?? Theme()
+            emoji = [:]
+            updateViewFromModel()
+        }
     }
     
     private var themeAnimals = Theme(backgroundView: #colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1), backgroundButton: #colorLiteral(red: 0.5058823824, green: 0.3372549117, blue: 0.06666667014, alpha: 1), emojis: "🐶🐱🦁🐭🐔🐧🐣🦄")
